@@ -1,0 +1,30 @@
+{% extends "base.html" %}
+{% load i18n %}
+{% load bootstrap3 %}
+{% block content %}
+
+<link href="http://getbootstrap.com/examples/signin/signin.css" rel="stylesheet">
+
+<div class="row">
+  <div class="col-xs-12 col-sm-6 col-sm-offset-3">
+
+<form class="form-signin" role="form" method="post" action=".">
+  {% csrf_token %} 
+  {% bootstrap_form form %}
+
+
+  {% buttons %}
+  <input class="btn btn-primary" type="submit" value="{% trans 'Log in' %}" />
+  <input type="hidden" name="next" value="{{ next }}" />
+  {% endbuttons %}
+  
+<p>{% trans "Forgot password" %}? <a href="{% url 'auth_password_reset' %}">{% trans "Reset it" %}</a>!</p>
+<p>{% trans "Not member" %}? <a href="{% url 'registration_register' %}">{% trans "Register" %}</a>!</p>
+</form>
+
+
+
+</div>
+</div>
+{% endblock %}
+

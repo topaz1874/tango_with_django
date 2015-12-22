@@ -1,0 +1,70 @@
+{% extends 'base.html' %}
+
+{% load staticfiles %}
+
+
+
+{% block content %}
+	{% if user.is_authenticated %}
+	<div class="page-header">
+	<h1>Rango says...hello {{ user.username }}!</h1>
+	{% else %}
+	<h1>Rango says...hello world!</h1>
+	{% endif %}
+	</div>
+
+	<div class="row placeholders">
+	  <div class="col-xs-12 col-sm-6 placeholder">
+	    <div class="panel panel-default">
+		  <div class="panel-heading">
+		  <h4>Categories</h4>
+		  </div>
+		{% if categories %}
+		<div class="panel-body">				
+		<h5>Top 5 Categories</h5></div>
+
+			<ul class="list-group">
+				{% for cat in categories %}
+				<li class="list-group-item">
+					<a href="{% url 'category' cat.slug %}">{{ cat.name }}</a>
+				</li>
+				{% endfor %}
+			</ul>
+		{% else %}
+			<strong>There are no categories present.</strong>
+		{% endif %}
+		</div>
+
+	  </div>
+	  <div class="col-xs-12 col-sm-6 placeholder">
+	    <div class="panel panel-default">
+
+	      <div class="panel-heading">
+	  	  <h4>Pages</h4>
+	  	  </div>
+
+	  	
+	    {% if pages %}
+	    <div class="panel-body">	      	
+	    <p>Top 5 Pages</p>
+	    </div>
+
+	      <ul class="list-group">
+	      	{% for page in pages %}
+	      	<li class="list-group-item">
+	      		<a href="{{page.url}}">{{page.title}}</a>
+	      	</li>
+	      	{% endfor %}
+	      </ul>
+	    {% else %}
+	    <strong> There are no pages present.</strong>
+	    {% endif %}
+	    </div>
+
+	  </div>
+	</div>
+	<p> visits:{{visits}}</p>
+
+	<img class="img-responsive" src="{% static "images/2015-11-06-roman-002.jpg" %}" alt="Picture of Rango"/>
+	
+{% endblock %}

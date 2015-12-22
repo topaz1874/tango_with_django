@@ -1,0 +1,33 @@
+{% extends 'base.html' %}
+
+{% load staticfiles %}
+
+{% block title %} About {% endblock %}
+	<link rel="stylesheet" type="text/css" href="{% static 'css/base.css' %}"/>
+	<script src="{% static 'js/jquery.js'%}"></script>
+{% block content %}
+	<div class="page-header">
+	<h1 class="text-center">About</h1>
+	  </div>
+	  <div>	
+	  	<p>You've been visit {{ visits }} times</p>
+
+		<p></strong></p>
+		<img class="img-responsive" src="{% static "images/boss-fight-free-high-quality-stock-images-photos-photography-trees-autumn.jpg" %}" alt="Picture of Rango"/>
+	  </div> 
+
+	  <button class="btn btn-default" onclick="alert('You clicked the button using Javascript.')">
+	  	Click Me - I run Javascript
+	  </button>
+
+	  <button class="btn btn-default"  id='about-btn'>
+	  	Click Me - I'm Javascript on Speed</button>	
+	  	<p>
+	  		This is a example
+	  	</p>
+	  	<p>
+	  		This is another example
+	  	</p>
+	      
+
+{% endblock %}

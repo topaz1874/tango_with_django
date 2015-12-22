@@ -1,0 +1,45 @@
+{% extends "base.html" %}
+{% load staticfiles %}
+
+{% block content %}
+
+  	<div class="panel panel-info">
+  	  <div class="panel-heading">
+  	  	<h3 class="panel-title">{{ user.username }}</h3>
+        <a href="{% url 'edit_profile' user.id %}">edit?</a>
+  	 </div>
+
+  	<div class="panel-body">
+  	  <div class="row">
+  	    <div class="col-md-3" align="center"> <img alt="User Pic" src="/media/profile_images/default_profile.jpg" class="img-circle img-responsive"></div>
+  	    <div class="col-md-9">
+  	      <table class="table table-user-information">
+  	        <tbody>
+  	          <tr>
+  	          	<td>Name</td>
+  	          	<td>{{ user.username }}</td>
+  	          </tr>
+  	          <tr>
+  	            <td>Email</td>
+  	            <td><a href="{{user.email}}">{{user.email}}</a></td>
+  	          </tr>
+  	          {% if profile.website %}
+  	          <tr>
+  	          	<td>website</td>
+  	            <td><a href="{{profile.website}}">{{profile.website}}</a></td>
+  	          </tr>{% endif %}
+              {% if profile.picture %}
+              <tr>
+                <td>picture</td>
+                <td>{{ profile.picture }}</td>
+              </tr>
+  	          {% endif %}
+  	        </tbody>
+  	      </table>
+  	    </div>
+
+  	  </div>
+	</div>
+    </div>
+
+{% endblock %}

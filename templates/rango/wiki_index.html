@@ -1,0 +1,21 @@
+{% extends "base.html" %}
+
+{% block content %}
+{% if articles %}
+<h2> Recent Aritcles</h2>
+
+<ul>
+	{% for article in articles %}
+	<li>
+		<a href="{% url 'wiki_article_detail' article.slug %}">{{ article.title }}
+	</li>
+	{% endfor %}
+</ul>
+{% else %}
+<h2>No articles have been published yet.</h2>
+{% endif %}
+
+<a href="{% url 'wiki_add_article' %}">Create new article</a>
+
+
+{% endblock content %}

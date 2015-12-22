@@ -1,0 +1,38 @@
+{% extends "base.html" %}
+{% load markdown_deux_tags %}
+
+{% block content %}
+	{% if messages %}
+	  <div class="messages">
+	  	<ul>
+	  		{% for message in messages  %}
+	  			<li class="{{message.tag}}">{{message}}</li>
+	  		{% endfor %}
+	  	</ul>
+	  </div>
+		
+	{% endif %}
+
+	{% if not article.is_published %}
+	  <label>Note: This article has not been published yet</label>
+	{% endif %}
+
+	<h2> {{ article.title }}</h2>
+	<p>
+		{{ article.text|markdown }}
+	</p>
+
+	<h3>Actions</h3>
+	<ul>
+		<li>
+			<a href="{% url 'wiki_edit_article' article.slug %}">Edit?</a>
+		</li>
+		<li>
+			<a href="{% url 'wiki_article_history' article.slug %}">View whats change</a>
+		</li>
+	</ul>
+
+	<a href="{% url 'wiki_article_index' %}">See all</a>
+	
+
+{% endblock content %}

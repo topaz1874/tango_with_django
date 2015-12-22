@@ -1,0 +1,1 @@
+BING_API_KEY = 'MVYQP9H16vGODdHJiztadukz0yRqkPVe9CmULPgBuh4'

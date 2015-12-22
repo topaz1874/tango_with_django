@@ -1,0 +1,97 @@
+{% extends "base.html" %}
+
+{% load staticfiles %}
+
+{% block title%} {{category_name }} {% endblock %}
+
+{% block content %}
+	<div class="page-header">
+	<h1>{{ category_name }}</h1>
+	</div>
+
+	<p> you've been viewed this category {{ views }} times</p>
+	{% if category %}
+
+		<div id='page'>
+		{% if pages %}
+			<ul>
+				{% for page in pages %}
+				<li>
+					<a href="{% url 'goto' %}?page_id={{page.id}}">{{ page.title }} -- you've been clicked {{page.views}} times</a></li>
+				{% endfor %}
+
+			</ul>
+
+		{% else %}
+			<strong>No pages currently in category.</strong>
+		{% endif %}
+		</div>
+
+
+		{% if user.is_authenticated %}
+		<br/>
+		<a href='{% url "add_page" category.slug %}'>add a new page?</a>
+		{% endif %}
+
+		<br/>
+		<div >
+		  <p>
+		  <strong id='like_count'>{{ category.likes }}</strong> people like this category
+
+		  {% if user.is_authenticated %}
+		  <button id="likes" data-catid="{{ category.id }}" class="btn btn-primary" type="button">
+		  <span class='glyphicon glyphicon-thumbs-up'></span>
+		  Like?
+		  </button>		  
+		  {% endif %}
+		  </p>
+
+		</div>
+		
+
+
+
+	{% else %}
+		The specified category {{ category_name }} does not exist!
+		<a href="{% url 'index' %}">go back?</a>
+	{% endif %}
+
+	{% if user.is_authenticated %}
+	<div class="row">
+		<div class="panel panel-primary">
+		  <br/>
+
+		  <form class="form-inline" id="usrer-form" method="post" action="{% url 'category' category.slug %}">{% csrf_token %}
+		    <input class="form-control" type="text" size="50" name="query" value="" id="query" />
+		    <input class="btn btn-primary" type="submit" name="submit" value="Search" />
+		  </form>
+		    <br/>
+
+		<div class="panel">
+			{% if result_list %}
+			<div class="panel-heading">
+			<h3 class="panel-title">Results</h3>
+			<div class="panel-body">
+			  <div class="list-group">
+			  {% for result in result_list %}
+			    <div class="list-group-item">
+			      <h4 class="list-group-item-heading"><a href="{{result.link}}">{{ result.title }}</a></h4>
+
+			      <button class='rango-add' class="btn btn-xs btn-default" data-catid={{category.id}} data-url={{ result.link }} data-title= {{ result.title }}>Add Page?</button>
+
+			      <p class="list-group-item-text">{{ result.summary }}</p>
+			    </div>
+			  {% endfor %}
+			  </div>
+			</div>
+			{% endif %}
+			</div>
+		</div>
+		</div>
+	</div>
+
+	{% endif %}
+{% endblock %}
+
+
+

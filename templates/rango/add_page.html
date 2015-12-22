@@ -1,0 +1,29 @@
+{% extends 'base.html' %}
+{% block content %}
+
+	
+	{% if not category_name_slug %}
+		<div class="page-header">
+		<h1>The specified category does not exist!</h1>
+		</div>
+	{% else %}
+		<div class="page-header">
+		<h1>You are adding page in {{ category.name }}</h1>
+		</div>
+		<form  id="page_form" method="post" action="{% url 'add_page' category_name_slug %}">
+		{% csrf_token %}
+		{% for hidden in form.hidden_fields %}
+		{{ hidden }}
+		{% endfor %}
+
+		{% for field in form.visible_fields %}
+		{{ field.errors }}<br/>
+		{{ field.help_text }}
+		{{ field }}
+		{% endfor %}
+		<br/>
+		<input type="submit" name="submit" value="Create Page"/>
+		</form>
+	{% endif %}
+
+{% endblock %}

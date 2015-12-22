@@ -1,0 +1,12 @@
+{% if pages %}
+	<ul>
+		{% for page in pages %}
+		<li>
+			<a href="{% url 'goto' %}?page_id={{page.id}}">{{ page.title }} -- you've been clicked {{page.views}} times</a></li>
+		{% endfor %}
+
+	</ul>
+
+{% else %}
+	<strong>No pages currently in category.</strong>
+{% endif %}
