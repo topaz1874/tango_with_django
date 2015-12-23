@@ -1,9 +1,23 @@
+import unittest
 from selenium import webdriver
 
-	
-browser = webdriver.Firefox()
-browser.get('localhost:8000/rango/')
 
-assert 'Rango' in browser.title
+class NewVisitorTest(unittest.TestCase):
 
-browser.close()
+	def setUp(self):
+		self.browser = webdriver.Firefox()
+		self.browser.implicitly_wait(2)
+
+	def tearDown(self):
+		self.browser.quit()
+
+	def test_can_retrive_categories(self):
+		self.browser.get('http://localhost:8000/rango')
+
+		self.assertIn('Rango', self.browser.title)
+		self.fail('Finish the test!')
+
+# if __name__ == '__main__':
+# 	unittest.main(warnings='ignore')
+
+
