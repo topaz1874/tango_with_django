@@ -40,7 +40,7 @@ INSTALLED_APPS = (
     'django.contrib.staticfiles',
     # third party app
     'registration',
-    'bootstrap3',
+    # 'bootstrap3',
     'markdown_deux',
     # your own app
     'rango',

@@ -1,6 +1,6 @@
 {% extends "base.html" %}
 {% load i18n %}
-{% load bootstrap3 %}
+<!-- {% load bootstrap3 %}-->
 {% block content %}
 
 <link href="http://getbootstrap.com/examples/signin/signin.css" rel="stylesheet">
@@ -10,8 +10,7 @@
 
 <form class="form-signin" role="form" method="post" action=".">
   {% csrf_token %} 
-  {% bootstrap_form form %}
-
+  {{ form }}
 
   {% buttons %}
   <input class="btn btn-primary" type="submit" value="{% trans 'Log in' %}" />
