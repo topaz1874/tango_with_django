@@ -9,6 +9,7 @@
 
 <form class="form-signin" role="form" method="post" action=".">
   {% csrf_token %} 
+  {{ form.as_p }}
 
   <input class="btn btn-primary" type="submit" value="{% trans 'Log in' %}" />
   <br/>
