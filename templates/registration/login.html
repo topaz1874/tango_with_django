@@ -1,6 +1,5 @@
 {% extends "base.html" %}
 {% load i18n %}
-<!-- {% load bootstrap3 %}-->
 {% block content %}
 
 <link href="http://getbootstrap.com/examples/signin/signin.css" rel="stylesheet">
@@ -10,12 +9,11 @@
 
 <form class="form-signin" role="form" method="post" action=".">
   {% csrf_token %} 
-  {{ form }}
+  {{ form.as_p }}
 
-  {% buttons %}
   <input class="btn btn-primary" type="submit" value="{% trans 'Log in' %}" />
+  <br/>
   <input type="hidden" name="next" value="{{ next }}" />
-  {% endbuttons %}
   
 <p>{% trans "Forgot password" %}? <a href="{% url 'auth_password_reset' %}">{% trans "Reset it" %}</a>!</p>
 <p>{% trans "Not member" %}? <a href="{% url 'registration_register' %}">{% trans "Register" %}</a>!</p>
