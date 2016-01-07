@@ -1,7 +1,7 @@
 from django.test import TestCase
 from django.core.urlresolvers import reverse
 # Create your tests here.
-from rango.models import Category
+from rango.models import Category, Page
 
 def add_cat(name, views, likes):
     c = Category.objects.get_or_create(name=name)[0]
@@ -9,6 +9,12 @@ def add_cat(name, views, likes):
     c.likes = likes
     c.save()
     return c
+
+def add_page(title, url, views, slug):
+    c = Category.objects.get(slug=slug)
+    p = Page.objects.create(title=title, url=url, views=views, category=c)
+    return p
+
 
 class CategoryMethodTests(TestCase):
 
@@ -60,4 +66,21 @@ class IndexViewTests(TestCase):
 
         num_cats = len(response.context['categories'])
         self.assertEqual(num_cats, 4)
+
+    def test_index_view_with_pages(self):
+
+        add_cat('test', 1, 1)
+        add_cat('another test', 2, 2)
+        add_page('test_page', 'http://noname.com', 23, 'test')
+        add_page('another_page_in_test_cat', 'http://abc.com', 2, 'test')
+
+        response = self.client.get(reverse('index'))
+        self.assertEqual(response.status_code, 200)
+        self.assertContains(response, 'noname')
+        num_pages = len(response.context['pages'])
+        num_cats = len(response.context['categories'])
+        self.assertEqual(num_pages, 2)
+        self.assertEqual(num_cats, 2)
+        print type(response.context)
+
 

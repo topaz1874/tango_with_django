@@ -4,9 +4,9 @@
 
 	<form id='login_form' method="post" action="{% url 'login' %}">
 	{% csrf_token %}
-	Username:<input type="text" name="username" value="" size="50"/>
+	Username:<input type="text" name="username" value="" size="50" id='username'/>
 	<br/>
-	PassWord:<input type="password" name="password" value="" size="50"/>
+	PassWord:<input type="password" name="password" value="" size="50" id='password'/>
 	<br/>
 	<input type="submit" value="submit" />
 		
