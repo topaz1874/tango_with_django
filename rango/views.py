@@ -2,12 +2,12 @@ from django.shortcuts import render, redirect, get_object_or_404, get_list_or_40
 from django.contrib import messages 
 from django.contrib.auth import authenticate, login, logout
 from django.contrib.auth.decorators import login_required
-from django.http import HttpResponseRedirect, HttpResponse
+from django.core.urlresolvers import reverse
+from django.http import HttpResponseRedirect, HttpResponse, HttpResponseBadRequest
 from datetime import datetime
 from .models import Category, Page, UserProfile, Article, Edit
-from .forms import CategoryForm, PageForm, UserForm, UserProfileForm, ArticleForm, EditForm
+from .forms import CategoryForm, PageForm, UserForm, UserProfileForm, ArticleForm, EditForm, ImageForm
 from .bing_search import requests_query
-
 # def index(request):
 # return HttpResponse("Rango says hey there world!")
 # construct a dictionary to pass to the template engine as ites context.
@@ -18,6 +18,15 @@ from .bing_search import requests_query
 # we make use of the shortcut function to make our lives easier.
 # Note that the first parameter is the template we wish to use.
 #     return render(request, 'rango/index.html', context_dict)
+def placeholder(request, width, height):
+    form = ImageForm({'height':height, 'width':width})
+    if form.is_valid():
+        image = form.generate()
+        return HttpResponse(image, content_type='image/png')
+    else:
+        return HttpResponseBadRequest('Invalid Image Request')
+
+
 
 
 def index_with_client_side_cookies(request):
@@ -351,11 +360,14 @@ def edit_profile(request, id):
 @login_required
 def profile(request):
     context_dict = {}
+    profile_image_holder = reverse('placeholder', kwargs={'width':100, 'height':100})
+
     try:
         profile = request.user.userprofile
     except UserProfile.DoesNotExist:
         profile = UserProfile(user=request.user)
     context_dict['profile'] = profile
+    context_dict['profile_image_holder']=request.build_absolute_uri(profile_image_holder)
 
     return render(request, 'rango/profile.html', context_dict)
 
@@ -481,13 +493,6 @@ def wiki_article_history(request, slug):
     return render(request, 'rango/wiki_article_history.html',
         {'article': article,
         'article_history': article_history})
-
-# class ArticleListView(ListView):
-#     model = Article
-#     template_name = "wiki_article_history"
-
-
-
 
 
 

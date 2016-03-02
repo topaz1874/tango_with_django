@@ -39,7 +39,10 @@ urlpatterns = patterns(
     url(r'^add/article$', views.wiki_add_article,
         name='wiki_add_article'),
     url(r'^edit/article(?P<slug>[-\w]+)/$', views.wiki_edit_article,
-        name='wiki_edit_article')
+        name='wiki_edit_article'),
+    url(r'^image/(?P<width>[0-9]+)x(?P<height>[0-9]+)/$', views.placeholder, 
+        name='placeholder'),
+
 
 
 )
